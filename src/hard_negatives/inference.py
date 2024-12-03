@@ -39,7 +39,6 @@ def process_entries(data_list, api_url):
 
 
 def process_directory(input_dir, output_dir, api_url):
-    """Processes all JSON files in the input directory and saves responses in the output directory."""
     input_path = Path(input_dir)
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
