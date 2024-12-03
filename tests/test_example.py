@@ -1,4 +1,4 @@
-from project_name.inference import add_one
+from hard_negatives.inference import add_one
 
 
 def test_add_one():
