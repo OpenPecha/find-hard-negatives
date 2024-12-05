@@ -10,15 +10,11 @@ from src.hard_negatives.inference import read_json_file, write_json_file, send_r
 def test_read_json_file():
     test_file = "test.json"
     test_data = {"key": "value"}
-
-    # Write test data to a temporary file
     with open(test_file, "w", encoding="utf-8") as file:
         json.dump(test_data, file, ensure_ascii=False, indent=4)
 
     result = read_json_file(test_file)
     assert result == test_data
-
-    # Clean up
     os.remove(test_file)
 
 
@@ -56,7 +52,7 @@ def test_process_entries():
     test_data = [
         {"image_url": "http://example.com/image1", "OCR_model": "model1"},
         {"image_url": "http://example.com/image2", "OCR_model": "model2"},
-        {"image_url": "http://example.com/image3"}  # Missing OCR_model
+        {"image_url": "http://example.com/image3"}
     ]
     api_url = "http://example.com/api"
 
@@ -85,20 +81,14 @@ def test_process_directory(mock_send_request, mock_write_json, mock_read_json, t
     output_dir = tmp_path / "ocr_output"
     input_dir.mkdir(parents=True, exist_ok=True)
     output_dir.mkdir(parents=True, exist_ok=True)
-
-    # Write test data to a temporary JSON file
     input_file = input_dir / "test_file.json"
     with open(input_file, "w", encoding="utf-8") as f:
         json.dump(test_data, f, ensure_ascii=False, indent=4)
 
-    # Mocking the responses from external functions
     mock_read_json.return_value = test_data
     mock_send_request.return_value = {"status": "success"}
-
-    # Call the function
     process_directory(str(input_dir), str(output_dir), "http://example.com/api")
 
-    # Verify write_json_file was called
     mock_write_json.assert_called_once_with(
         [{"status": "success"}, {"status": "success"}], output_dir / "test_file.json"
     )
