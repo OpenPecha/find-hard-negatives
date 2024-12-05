@@ -55,5 +55,5 @@ def process_directory(input_dir, output_dir, api_url):
 if __name__ == "__main__":
     input_dir = "data/input_json"
     output_dir = "data/ocr_output"
-    api_url = os.getenv("OCR_API_URL")
+    api_url = os.getenv("API_URL")
     process_directory(input_dir, output_dir, api_url)
